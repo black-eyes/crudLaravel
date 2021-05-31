@@ -14,10 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //exit("im in");
-        //
 
-        $products = Product::paginate(10);
+        $products = Product::orderby('id','desc')->paginate(10);
         //$products = Product::all();
 
         return view('products.index', compact('products'));
@@ -30,7 +28,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
+        echo "hello we are on create a new product";
     }
 
     /**
@@ -41,7 +40,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([]);
+
+        Product::create($request->all());
+
+        return redirect()->route('Product.index')
+            ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -49,8 +53,10 @@ class ProductController extends Controller
      *  @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product,$id)
     {
+
+
         //exit("we ARE in the controller");
         $product = Product::find($id);
         //return view('Product.show');
@@ -76,9 +82,18 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product,$id)
     {
-        //
+        $request->validate([]);
+
+        $product = Product::find($id);
+        //return view('Product.show');
+        $product->update($request->all());
+
+
+//        $request->session()->flash('success','product successfully updated');
+        return view('products.show',compact('product'))
+            ->with('success','product successfully updated');
     }
 
     /**

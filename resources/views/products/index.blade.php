@@ -1,6 +1,6 @@
 @extends('base')
 @section('content')
-    <h1 class="text-center">hello this is a test</h1>
+    <h1 class="text-center m-t-lg">List of all Products</h1>
     {{-- dd($products) --}}
 
 
@@ -16,8 +16,8 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-
-    <table class="table">
+<a class="btn btn-primary" href="{{route('Product.create' )}}">New</a>
+    <table class="table m-t-lg">
         <tr>
             <th>
                 #
